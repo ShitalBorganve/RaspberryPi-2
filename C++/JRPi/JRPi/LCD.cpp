@@ -7,11 +7,6 @@ int millisleep(float ms)
 	return usleep(1000 * ms);
 }
 
-int ord(char ord)
-{
-	return (int)ord;
-}
-
 LCD::LCD(vector<std::string> ioPorts, unsigned int lineLength, unsigned int numOfLines)
 {
 	if(ioPorts.size() < 6)
@@ -40,10 +35,10 @@ void LCD::message(string message, unsigned int line)
 {
 	switch(line)
 	{
-		case 1:
+		case 0:
 			byte(LCD_LINE_1, LCD_CMD);
 			break;
-		case 2:
+		case 1:
 			byte(LCD_LINE_2, LCD_CMD);
 			break;
 		default:
@@ -151,11 +146,9 @@ void LCD::byte(int bits, bool mode)
 
 void LCD::pulse()
 {
-	usleep(50);
 	LCD_E->setVal("1");
 	usleep(50);
 	LCD_E->setVal("0");
-	usleep(50);
 }
 
 void LCD::unExport()
@@ -168,15 +161,14 @@ void LCD::unExport()
 	LCD_D7->unExportIO();
 
 	delete LCD_RS;
-	LCD_RS = 0;
 	delete LCD_E;
-	LCD_E = 0;
 	delete LCD_D4;
-	LCD_D4 = 0;
 	delete LCD_D5;
-	LCD_D5 = 0;
 	delete LCD_D6;
-	LCD_D6 = 0;
 	delete LCD_D7;
-	LCD_D7 = 0;
+}
+
+void LCD::clear()
+{
+	byte(0x01, LCD_CMD);
 }

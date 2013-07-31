@@ -12,6 +12,7 @@ const bool LCD_CHR = true;
 const bool LCD_CMD = false;
 const int LCD_LINE_1 = 0x80;
 const int LCD_LINE_2 = 0xC0;
+const int LCD_SETDDRAMADDR = 0x80;
 
 #define CHECK_BIT(var,pos) ((var & (1 << pos)) == (1 << pos))
 
@@ -26,6 +27,7 @@ class LCD
 		void byte(int, bool);
 		void message(string, unsigned int);
 		void unExport();
+		void clear();
 	private:
 		unsigned int numOfLines;
 		unsigned int lineLength;

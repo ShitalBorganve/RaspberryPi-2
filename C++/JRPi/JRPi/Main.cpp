@@ -28,15 +28,14 @@ int main(void)
 	v.push_back("18");
 	LCD lcd(v, 16, 2);
 	lcd.init();
-	lcd.message("abcdABCDefghEFGH", 1);
-	lcd.message("1234'/><:=+LPI?[", 2);
+	lcd.message("abcdABCDefghEFGH", 0);
+	lcd.message("1234'/><:=+LPI?[", 1);
 	string line = "";
 	while(line != "exit")
 	{
 		getline(cin, line);
 	}
-	lcd.message("", 1);
-	lcd.message("", 2);
+	lcd.clear();
 	lcd.unExport();
 
     return 0;
