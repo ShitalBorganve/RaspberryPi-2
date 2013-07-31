@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "Utils.h"
+#include <algorithm>
 
 vector<int> openIOPorts;
 
@@ -63,18 +64,18 @@ int GPIO::setup(unsigned int ioPort, string dir)
 int GPIO::cleanup()
 {
 	bool b = false;
-	for(int i : openIOPorts)
+	for(int i = 0; i < openIOPorts.size(); i++)
 	{
 		string unexport_str = "/sys/class/gpio/unexport";
 		ofstream unexportgpio(unexport_str.c_str());
 		if (unexportgpio < 0)
 		{
 			b = true;
-			cout << WARNING << "OPERATION FAILED: Unable to unexport GPIO" << i << "." << ENDC << endl;
+			cout << WARNING << "OPERATION FAILED: Unable to unexport GPIO" << openIOPorts[i] << "." << ENDC << endl;
 		}
 		else
 		{
-			unexportgpio.write(Utils::to_string(i).c_str(), strlen(Utils::to_string(i).c_str()));
+			unexportgpio.write(Utils::to_string(openIOPorts[i]).c_str(), Utils::to_string(openIOPorts[i]).length());
 		}
 
 		unexportgpio.close();

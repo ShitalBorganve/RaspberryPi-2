@@ -116,6 +116,7 @@ void LCD::clear()
 
 void LCD::cleanup()
 {
+	clear();
 	GPIO::cleanup();
 }
 
