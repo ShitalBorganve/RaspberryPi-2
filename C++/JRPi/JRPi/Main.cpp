@@ -30,9 +30,12 @@ int main(void)
 	lcd.init();
 	lcd.message("abcdABCDefghEFGH", 1);
 	lcd.message("1234'/><:=+LPI?[", 2);
-	while(true)
+	string line = "";
+	while(line != "exit")
 	{
+		getline(cin, line);
 	}//*/
+	lcd.unExport();
 
     return 0;
 }

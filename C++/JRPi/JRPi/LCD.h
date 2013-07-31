@@ -29,6 +29,7 @@ class LCD
 		void byte(int, bool);
 		void message(string, unsigned int);
 		void character(char);
+		void unExport();
 	private:
 		unsigned int numOfLines;
 		unsigned int lineLength;

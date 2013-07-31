@@ -130,16 +130,16 @@ void LCD::character(char bits)
 		{
 			switch(i)
 			{
-				case 7:
+				case 3:
 					LCD_D7->setVal("1");
 					break;
-				case 6:
+				case 2:
 					LCD_D6->setVal("1");
 					break;
-				case 5:
+				case 1:
 					LCD_D5->setVal("1");
 					break;
-				case 4:
+				case 0:
 					LCD_D4->setVal("1");
 					break;
 			}
@@ -196,16 +196,16 @@ void LCD::byte(int bits, bool mode)
 		{
 			switch(i)
 			{
-				case 7:
+				case 3:
 					LCD_D7->setVal("1");
 					break;
-				case 6:
+				case 2:
 					LCD_D6->setVal("1");
 					break;
-				case 5:
+				case 1:
 					LCD_D5->setVal("1");
 					break;
-				case 4:
+				case 0:
 					LCD_D4->setVal("1");
 					break;
 			}
@@ -221,4 +221,14 @@ void LCD::pulse()
 	millisleep(1);
 	LCD_E->setVal("0");
 	millisleep(1);
+}
+
+void LCD::unExport()
+{
+	LCD_RS->unExportIO();
+	LCD_E->unExportIO();
+	LCD_D4->unExportIO();
+	LCD_D5->unExportIO();
+	LCD_D6->unExportIO();
+	LCD_D7->unExportIO();
 }
