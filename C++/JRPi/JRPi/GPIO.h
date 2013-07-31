@@ -14,45 +14,12 @@ class GPIO
 
 		int exportIO();
 		int unExportIO();
-		int setDir(IO_Dir dir);
-		int setVal(IO_Val val);
-		int getVal(IO_Val &val);
+		int setDir(string dir);
+		int setVal(string val);
+		int getVal(string &val);
 		string getIO_Number();
 	private:
 		string io_number;
-		static string Dir(IO_Dir dir)
-		{
-			if(dir == In)
-			{
-				return "in";
-			}
-			else
-			{
-				return "out";
-			}
-		}
-
-		static string Val(IO_Val val)
-		{
-			if(val == One)
-			{
-				return "1";
-			}
-			else
-			{
-				return "0";
-			}
-		}
-};
-
-enum IO_Dir
-{
-	In, Out
-};
-
-enum IO_Val
-{
-	One, Zero
 };
 
 #endif

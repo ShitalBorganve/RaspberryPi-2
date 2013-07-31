@@ -40,7 +40,7 @@ int GPIO::unExportIO()
     ofstream unexportgpio(unexport_str.c_str());
     if (unexportgpio < 0)
 	{
-        cout << " OPERATION FAILED: Unable to unexport GPIO"<< this->io_number <<" ."<< endl;
+        cout << " OPERATION FAILED: Unable to unexport GPIO" << this->io_number <<" ."<< endl;
         return -1;
     }
  
@@ -49,56 +49,47 @@ int GPIO::unExportIO()
     return 0;
 }
  
-int GPIO::setDir(IO_Dir dir1)
+int GPIO::setDir(string dir)
 {
     string setdir_str ="/sys/class/gpio/gpio" + this->io_number + "/direction";
     ofstream setdirgpio(setdir_str.c_str());
     if (setdirgpio < 0)
 	{
-        cout << " OPERATION FAILED: Unable to set direction of GPIO"<< this->io_number <<" ."<< endl;
+        cout << " OPERATION FAILED: Unable to set direction of GPIO" << this->io_number <<" ."<< endl;
         return -1;
     }
  
-    setdirgpio << Dir(dir1);
+    setdirgpio << dir;
     setdirgpio.close();
     return 0;
 }
  
-int GPIO::setVal(IO_Val val1)
+int GPIO::setVal(string val)
 {
     string setval_str = "/sys/class/gpio/gpio" + this->io_number + "/value";
     ofstream setvalgpio(setval_str.c_str());
 	if (setvalgpio < 0)
 	{
-		cout << " OPERATION FAILED: Unable to set the value of GPIO"<< this->io_number <<" ."<< endl;
+		cout << " OPERATION FAILED: Unable to set the value of GPIO" << this->io_number <<" ."<< endl;
 		return -1;
 	}
  
-    setvalgpio << Val(val1);
+    setvalgpio << val;
     setvalgpio.close();
     return 0;
 }
  
-int GPIO::getVal(IO_Val &val1)
+int GPIO::getVal(string &val)
 {
 	string getval_str = "/sys/class/gpio/gpio" + this->io_number + "/value";
 	ifstream getvalgpio(getval_str.c_str());
 	if (getvalgpio < 0)
 	{
-		cout << " OPERATION FAILED: Unable to get value of GPIO"<< this->io_number <<" ."<< endl;
+		cout << " OPERATION FAILED: Unable to get value of GPIO" << this->io_number <<" ."<< endl;
 		return -1;
 	}
  
-	getvalgpio >> Val(val1);
- 
-	if(Val(val1) != "0")
-	{
-		val1 = IO_Val::One;
-	}
-	else
-	{
-		val1 = IO_Val::Zero;
-	}
+	getvalgpio >> val;
  
 	getvalgpio.close();
 	return 0;

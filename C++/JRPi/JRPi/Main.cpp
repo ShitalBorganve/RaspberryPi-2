@@ -1,28 +1,29 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include "GPIO.h"
+#include "LCD.h"
+
 using namespace std;
  
 int main(void)
 {
-	GPIO *gpio24 = new GPIO("24");
-	GPIO *gpio25 = new GPIO("25");
-
-	gpio24->exportIO();
-	gpio25->exportIO();
-
-	gpio24->setDir(Out);
-	gpio25->setDir(Out);
-
-	for(unsigned int i = 0; i < 50; i++)
+	string line = "";
+	int i = 0;
+	vector<string> v;
+	v.push_back("7");
+	v.push_back("8");
+	v.push_back("25");
+	v.push_back("24");
+	v.push_back("23");
+	v.push_back("18");
+	LCD lcd(v, 16, 2);
+	while(line != "exit")
 	{
-		gpio24->setVal(One);
+		getline(cin, line);
+		lcd.message("Test 1", 1);
+		lcd.message("Test 2", 2);
+		i++;
 	}
-	gpio24->~GPIO();
-	gpio25->~GPIO();
-	delete gpio24;
-	delete gpio25;
 
     return 0;
 }
