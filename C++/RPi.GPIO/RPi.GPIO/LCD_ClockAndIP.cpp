@@ -91,7 +91,7 @@ string dateTime()
 	time(&c);
 	struct tm *theTime = localtime(&c);
 	string day = ts(theTime->tm_mday);
-	int month = theTime->tm_mon;
+	int month = theTime->tm_mon + 1;
 
 	string hr = ts(theTime->tm_hour);
 	string min = ts(theTime->tm_min);
