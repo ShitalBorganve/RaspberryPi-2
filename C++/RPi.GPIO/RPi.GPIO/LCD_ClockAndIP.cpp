@@ -4,6 +4,7 @@
 #include "LCD.h"
 #include <time.h>
 #include <sstream>
+#include "Utils.h"
 
 #include <string.h>
 #include <sys/types.h>
@@ -12,6 +13,11 @@
 #include <netinet/in.h>
 #include <net/if.h>
 #include <arpa/inet.h>
+
+#include <termios.h>
+#include <sys/time.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 using namespace std;
 
@@ -121,6 +127,18 @@ string ipAddr()
  
 int main(void)
 {
+    struct termios oldSettings, newSettings;
+
+    tcgetattr( fileno( stdin ), &oldSettings );
+    newSettings = oldSettings;
+    newSettings.c_lflag &= (~ICANON & ~ECHO);
+    tcsetattr( fileno( stdin ), TCSANOW, &newSettings );
+	
+    struct timeval tv;
+
+    tv.tv_sec = 0;
+    tv.tv_usec = 50;
+
 	LCD lcd(7, 8, 25, 24, 23, 18, 2, 16);
 	lcd.init();
 	long double t = time(0);
@@ -128,7 +146,8 @@ int main(void)
 	long double tt = t;
 	lcd.message(dateTime(), 0);
 	lcd.message("IP: " + ipAddr(), 1);
-	while(true)
+	char c = ' ';
+	do
 	{
 		t = time(0);
 		if(t - pt >= 1)
@@ -141,10 +160,24 @@ int main(void)
 			lcd.message("IP: " + ipAddr(), 1);
 			tt = t;
 		}
+
+		fd_set set;
+
+        FD_ZERO( &set );
+        FD_SET( fileno( stdin ), &set );
+
+		int res = select( fileno( stdin )+1, &set, NULL, NULL, &tv );
+		if(res > 0)
+		{
+			read( fileno( stdin ), &c, 1 );
+		}
 	}
+	while(c != 'q');
 
 	lcd.clear();
 	lcd.~LCD();
+
+	tcsetattr( fileno( stdin ), TCSANOW, &oldSettings );
 
     return 0;
 }
