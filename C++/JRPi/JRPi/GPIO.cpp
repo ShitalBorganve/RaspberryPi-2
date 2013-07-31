@@ -25,10 +25,9 @@ int GPIO::exportIO()
 	ofstream exportgpio(exportStr.c_str());
     if (exportgpio < 0)
 	{
-        cout << " OPERATION FAILED: Unable to export GPIO"<< this->io_number <<" ."<< endl;
+        cout << " OPERATION FAILED: Unable to export GPIO"<< this->io_number <<"."<< endl;
         return -1;
     }
- 
     exportgpio << this->io_number;
     exportgpio.close();
     return 0;
@@ -40,7 +39,7 @@ int GPIO::unExportIO()
     ofstream unexportgpio(unexport_str.c_str());
     if (unexportgpio < 0)
 	{
-        cout << " OPERATION FAILED: Unable to unexport GPIO" << this->io_number <<" ."<< endl;
+        cout << " OPERATION FAILED: Unable to unexport GPIO" << this->io_number <<"."<< endl;
         return -1;
     }
  
@@ -73,7 +72,6 @@ int GPIO::setVal(string val)
 		cout << " OPERATION FAILED: Unable to set the value of GPIO" << this->io_number <<" ."<< endl;
 		return -1;
 	}
- 
     setvalgpio << val;
     setvalgpio.close();
     return 0;

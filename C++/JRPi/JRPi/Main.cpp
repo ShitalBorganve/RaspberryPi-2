@@ -7,8 +7,18 @@ using namespace std;
  
 int main(void)
 {
+	/*GPIO* a = new GPIO("11");
+	a->exportIO();
+	a->setDir("out");
 	string line = "";
-	int i = 0;
+	while(line != "exit")
+	{
+		//getline(cin, line);
+		string val = "";
+		a->getVal(val);
+		a->setVal(val[0] == '1' ? "0" : "1");
+		usleep(500 * 1000);
+	}//*/
 	vector<string> v;
 	v.push_back("7");
 	v.push_back("8");
@@ -17,13 +27,12 @@ int main(void)
 	v.push_back("23");
 	v.push_back("18");
 	LCD lcd(v, 16, 2);
-	while(line != "exit")
+	lcd.init();
+	lcd.message("abcdABCDefghEFGH", 1);
+	lcd.message("1234'/><:=+LPI?[", 2);
+	while(true)
 	{
-		getline(cin, line);
-		lcd.message("Test 1", 1);
-		lcd.message("Test 2", 2);
-		i++;
-	}
+	}//*/
 
     return 0;
 }

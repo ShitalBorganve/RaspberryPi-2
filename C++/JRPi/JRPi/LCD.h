@@ -16,6 +16,8 @@ const bool LCD_CMD = false;
 const int LCD_LINE_1 = 0x80;
 const int LCD_LINE_2 = 0xC0;
 
+#define CHECK_BIT(var,pos) ((var & (1 << pos)) == (1 << pos))
+
 class LCD
 {
 	public:
@@ -24,11 +26,13 @@ class LCD
 
 		void init();
 
-		void byte(unsigned int, bool);
+		void byte(int, bool);
 		void message(string, unsigned int);
+		void character(char);
 	private:
 		unsigned int numOfLines;
 		unsigned int lineLength;
+		void pulse();
 		GPIO *LCD_RS;
 		GPIO *LCD_E;
 		GPIO *LCD_D4;

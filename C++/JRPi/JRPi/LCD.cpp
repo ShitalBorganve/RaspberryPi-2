@@ -1,23 +1,10 @@
 #include "LCD.h"
-#if defined(WIN32)
-  #include <windows.h>
-#elif defined(__UNIX__)
-  #include <unistd.h>
-#else
-#endif
+#include <iostream>
+#include <unistd.h>
 
 int millisleep(float ms)
 {
-#if defined(WIN32)
-  SetLastError(0);
-  Sleep(ms);
-  return GetLastError() ?-1 :0;
-#else//#elif defined(LINUX)
-  return usleep(1000 * ms);
-//#else
-//#error ("no milli sleep available for platform")
-//  return -1;
-#endif
+	return usleep(1000 * ms);
 }
 
 int ord(char ord)
@@ -73,7 +60,7 @@ void LCD::message(string message, unsigned int line)
 	for(unsigned int i = 0; i < lineLength; i++)
 	{
 		char s = message[i];
-		byte(ord(s), LCD_CHR);
+		character(ord(s));
 	}
 }
 
@@ -94,63 +81,141 @@ void LCD::init()
 	byte(0x01, LCD_CMD);
 }
 
-void LCD::byte(unsigned int byte, bool mode)
+void LCD::character(char bits)
 {
-	LCD_RS->setVal("0");
+	LCD_RS->setVal("1");
+
+	bool z;
+	int i;
 
 	LCD_D4->setVal("0");
 	LCD_D5->setVal("0");
 	LCD_D6->setVal("0");
 	LCD_D7->setVal("0");
 
-	if(byte&0x10 == 0x10)
+	for(i=7; i>=4; i--)
 	{
-		LCD_D4->setVal("1");
+		z = CHECK_BIT(bits,i);
+		if(z)
+		{
+			switch(i)
+			{
+				case 7:
+					LCD_D4->setVal("1");
+					break;
+				case 6:
+					LCD_D5->setVal("1");
+					break;
+				case 5:
+					LCD_D6->setVal("1");
+					break;
+				case 4:
+					LCD_D7->setVal("1");
+					break;
+			}
+		}
 	}
-	if(byte&0x20 == 0x20)
-	{
-		LCD_D4->setVal("1");
-	}
-	if(byte&0x40 == 0x40)
-	{
-		LCD_D4->setVal("1");
-	}
-	if(byte&0x80 == 0x80)
-	{
-		LCD_D4->setVal("1");
-	}
-	
-	millisleep(1);
-	LCD_E->setVal("1");
-	millisleep(1);
-	LCD_E->setVal("0");
-	millisleep(1);
+	pulse();
 	
 	LCD_D4->setVal("0");
 	LCD_D5->setVal("0");
 	LCD_D6->setVal("0");
 	LCD_D7->setVal("0");
 
-	if(byte&0x01 == 0x01)
+	for(i=3; i>=0; i--)
 	{
-		LCD_D4->setVal("1");
+		z = CHECK_BIT(bits,i);
+		if(z)
+		{
+			switch(i)
+			{
+				case 7:
+					LCD_D4->setVal("1");
+					break;
+				case 6:
+					LCD_D5->setVal("1");
+					break;
+				case 5:
+					LCD_D6->setVal("1");
+					break;
+				case 4:
+					LCD_D7->setVal("1");
+					break;
+			}
+		}
 	}
-	if(byte&0x02 == 0x02)
+	pulse();
+}
+
+void LCD::byte(int bits, bool mode)
+{
+	LCD_RS->setVal(mode ? "1" : "0");
+
+	bool z;
+	int i;
+
+	LCD_D4->setVal("0");
+	LCD_D5->setVal("0");
+	LCD_D6->setVal("0");
+	LCD_D7->setVal("0");
+
+	for(i=7; i>=4; i--)
 	{
-		LCD_D4->setVal("1");
+		z = CHECK_BIT(bits,i);
+		if(z)
+		{
+			switch(i)
+			{
+				case 7:
+					LCD_D4->setVal("1");
+					break;
+				case 6:
+					LCD_D5->setVal("1");
+					break;
+				case 5:
+					LCD_D6->setVal("1");
+					break;
+				case 4:
+					LCD_D7->setVal("1");
+					break;
+			}
+		}
 	}
-	if(byte&0x04 == 0x04)
-	{
-		LCD_D4->setVal("1");
-	}
-	if(byte&0x08 == 0x08)
-	{
-		LCD_D4->setVal("1");
-	}
+	pulse();
 	
-	millisleep(1);
+	LCD_D4->setVal("0");
+	LCD_D5->setVal("0");
+	LCD_D6->setVal("0");
+	LCD_D7->setVal("0");
+
+	for(i=3; i>=0; i--)
+	{
+		z = CHECK_BIT(bits,i);
+		if(z)
+		{
+			switch(i)
+			{
+				case 7:
+					LCD_D4->setVal("1");
+					break;
+				case 6:
+					LCD_D5->setVal("1");
+					break;
+				case 5:
+					LCD_D6->setVal("1");
+					break;
+				case 4:
+					LCD_D7->setVal("1");
+					break;
+			}
+		}
+	}
+	pulse();
+}
+
+void LCD::pulse()
+{
 	LCD_E->setVal("1");
-	millisleep(1);
+	millisleep(2);
 	LCD_E->setVal("0");
-	millisleep(1);
 }
