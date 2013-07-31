@@ -54,8 +54,7 @@ void LCD::message(string message, unsigned int line)
 	}
 	for(unsigned int i = 0; i < lineLength; i++)
 	{
-		cout << ord(message[i]);
-		character(ord(message[i]));
+		byte(message[i], LCD_CHR);
 	}
 }
 
@@ -217,7 +216,9 @@ void LCD::byte(int bits, bool mode)
 
 void LCD::pulse()
 {
+	millisleep(1);
 	LCD_E->setVal("1");
-	millisleep(2);
+	millisleep(1);
 	LCD_E->setVal("0");
+	millisleep(1);
 }
