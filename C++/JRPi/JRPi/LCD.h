@@ -8,9 +8,6 @@
 #include <string>
 #include <vector>
 
-const float E_PULSE = 0.00005f;
-const float E_DELAY = 0.00005f;
-
 const bool LCD_CHR = true;
 const bool LCD_CMD = false;
 const int LCD_LINE_1 = 0x80;
@@ -28,7 +25,6 @@ class LCD
 
 		void byte(int, bool);
 		void message(string, unsigned int);
-		void character(char);
 		void unExport();
 	private:
 		unsigned int numOfLines;

@@ -34,7 +34,7 @@ int main(void)
 	while(line != "exit")
 	{
 		getline(cin, line);
-	}//*/
+	}
 	lcd.unExport();
 
     return 0;

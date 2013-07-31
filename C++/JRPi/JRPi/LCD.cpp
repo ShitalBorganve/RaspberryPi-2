@@ -33,6 +33,7 @@ LCD::LCD(vector<std::string> ioPorts, unsigned int lineLength, unsigned int numO
 
 LCD::~LCD(void)
 {
+	unExport();
 }
 
 void LCD::message(string message, unsigned int line)
@@ -80,72 +81,6 @@ void LCD::init()
 	byte(0x0C, LCD_CMD);
 	byte(0x06, LCD_CMD);
 	byte(0x01, LCD_CMD);
-}
-
-void LCD::character(char bits)
-{
-	LCD_RS->setVal("1");
-
-	bool z;
-	int i;
-
-	LCD_D4->setVal("0");
-	LCD_D5->setVal("0");
-	LCD_D6->setVal("0");
-	LCD_D7->setVal("0");
-
-	for(i=7; i>=4; i--)
-	{
-		z = CHECK_BIT(bits,i);
-		if(z)
-		{
-			switch(i)
-			{
-				case 7:
-					LCD_D7->setVal("1");
-					break;
-				case 6:
-					LCD_D6->setVal("1");
-					break;
-				case 5:
-					LCD_D5->setVal("1");
-					break;
-				case 4:
-					LCD_D4->setVal("1");
-					break;
-			}
-		}
-	}
-	pulse();
-	
-	LCD_D4->setVal("0");
-	LCD_D5->setVal("0");
-	LCD_D6->setVal("0");
-	LCD_D7->setVal("0");
-
-	for(i=3; i>=0; i--)
-	{
-		z = CHECK_BIT(bits,i);
-		if(z)
-		{
-			switch(i)
-			{
-				case 3:
-					LCD_D7->setVal("1");
-					break;
-				case 2:
-					LCD_D6->setVal("1");
-					break;
-				case 1:
-					LCD_D5->setVal("1");
-					break;
-				case 0:
-					LCD_D4->setVal("1");
-					break;
-			}
-		}
-	}
-	pulse();
 }
 
 void LCD::byte(int bits, bool mode)
@@ -216,11 +151,11 @@ void LCD::byte(int bits, bool mode)
 
 void LCD::pulse()
 {
-	millisleep(1);
+	usleep(50);
 	LCD_E->setVal("1");
-	millisleep(1);
+	usleep(50);
 	LCD_E->setVal("0");
-	millisleep(1);
+	usleep(50);
 }
 
 void LCD::unExport()
@@ -231,4 +166,17 @@ void LCD::unExport()
 	LCD_D5->unExportIO();
 	LCD_D6->unExportIO();
 	LCD_D7->unExportIO();
+
+	delete LCD_RS;
+	LCD_RS = 0;
+	delete LCD_E;
+	LCD_E = 0;
+	delete LCD_D4;
+	LCD_D4 = 0;
+	delete LCD_D5;
+	LCD_D5 = 0;
+	delete LCD_D6;
+	LCD_D6 = 0;
+	delete LCD_D7;
+	LCD_D7 = 0;
 }
