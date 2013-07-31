@@ -54,7 +54,8 @@ void LCD::message(string message, unsigned int line)
 	}
 	for(unsigned int i = 0; i < lineLength; i++)
 	{
-		character(message[i]);
+		cout << ord(message[i]);
+		character(ord(message[i]));
 	}
 }
 
@@ -66,6 +67,13 @@ void LCD::init()
 	LCD_D5->exportIO();
 	LCD_D6->exportIO();
 	LCD_D7->exportIO();
+	
+	LCD_RS->setDir("out");
+	LCD_E->setDir("out");
+	LCD_D4->setDir("out");
+	LCD_D5->setDir("out");
+	LCD_D6->setDir("out");
+	LCD_D7->setDir("out");
 
 	byte(0x33, LCD_CMD);
 	byte(0x32, LCD_CMD);
@@ -95,16 +103,16 @@ void LCD::character(char bits)
 			switch(i)
 			{
 				case 7:
-					LCD_D4->setVal("1");
+					LCD_D7->setVal("1");
 					break;
 				case 6:
-					LCD_D5->setVal("1");
-					break;
-				case 5:
 					LCD_D6->setVal("1");
 					break;
+				case 5:
+					LCD_D5->setVal("1");
+					break;
 				case 4:
-					LCD_D7->setVal("1");
+					LCD_D4->setVal("1");
 					break;
 			}
 		}
@@ -124,16 +132,16 @@ void LCD::character(char bits)
 			switch(i)
 			{
 				case 7:
-					LCD_D4->setVal("1");
+					LCD_D7->setVal("1");
 					break;
 				case 6:
-					LCD_D5->setVal("1");
-					break;
-				case 5:
 					LCD_D6->setVal("1");
 					break;
+				case 5:
+					LCD_D5->setVal("1");
+					break;
 				case 4:
-					LCD_D7->setVal("1");
+					LCD_D4->setVal("1");
 					break;
 			}
 		}
@@ -161,16 +169,16 @@ void LCD::byte(int bits, bool mode)
 			switch(i)
 			{
 				case 7:
-					LCD_D4->setVal("1");
+					LCD_D7->setVal("1");
 					break;
 				case 6:
-					LCD_D5->setVal("1");
-					break;
-				case 5:
 					LCD_D6->setVal("1");
 					break;
+				case 5:
+					LCD_D5->setVal("1");
+					break;
 				case 4:
-					LCD_D7->setVal("1");
+					LCD_D4->setVal("1");
 					break;
 			}
 		}
@@ -190,16 +198,16 @@ void LCD::byte(int bits, bool mode)
 			switch(i)
 			{
 				case 7:
-					LCD_D4->setVal("1");
+					LCD_D7->setVal("1");
 					break;
 				case 6:
-					LCD_D5->setVal("1");
-					break;
-				case 5:
 					LCD_D6->setVal("1");
 					break;
+				case 5:
+					LCD_D5->setVal("1");
+					break;
 				case 4:
-					LCD_D7->setVal("1");
+					LCD_D4->setVal("1");
 					break;
 			}
 		}
