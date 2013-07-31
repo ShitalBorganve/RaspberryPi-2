@@ -35,6 +35,8 @@ int main(void)
 	{
 		getline(cin, line);
 	}
+	lcd.message("", 1);
+	lcd.message("", 2);
 	lcd.unExport();
 
     return 0;

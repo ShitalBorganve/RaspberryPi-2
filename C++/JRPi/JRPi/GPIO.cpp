@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <stdlib.h>
 
 GPIO::GPIO(void)
 {
@@ -88,7 +89,6 @@ int GPIO::getVal(string &val)
 	}
  
 	getvalgpio >> val;
- 
 	getvalgpio.close();
 	return 0;
 }
