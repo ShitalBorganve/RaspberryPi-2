@@ -48,19 +48,13 @@ void LCD::message(string message, unsigned int line)
 		default:
 			byte(LCD_LINE_1, LCD_CMD);
 	}
-	if(line > numOfLines)
-	{
-		cout << "Can not write to line, it does not exist!" << endl;
-		exit(1);
-	}
 	while(message.length() < lineLength)
 	{
 		message += " ";
 	}
 	for(unsigned int i = 0; i < lineLength; i++)
 	{
-		char s = message[i];
-		character(ord(s));
+		character(message[i]);
 	}
 }
 
