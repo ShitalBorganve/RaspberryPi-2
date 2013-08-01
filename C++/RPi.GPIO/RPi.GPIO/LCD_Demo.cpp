@@ -23,15 +23,9 @@
 
 using namespace std;
 
-string outputStr(string input, bool cutLineNumber)
-{
-	if(cutLineNumber)
-	{
-		return input.substr(2, input.length() - 2);
-	}
-	return input;
-}
-
+/* 
+ * Gets a three letter string based on the number of the month
+ */
 string mon(unsigned int i)
 {
 	while(i > 12)
@@ -81,6 +75,9 @@ string mon(unsigned int i)
 	}
 }
 
+/*
+ * Puts zeros in front of day, min, and sec when they are < 10
+ */
 void check(string &s)
 {
 	while(s.length() < 2)
@@ -89,6 +86,9 @@ void check(string &s)
 	}
 }
 
+/* Gets date and local time
+ * Format: Mon dd  hh:mm:ss
+ */
 string dateTime()
 {
 	time_t c;
@@ -109,6 +109,9 @@ string dateTime()
 	return stt;
 }
 
+/*
+ * Gets your local ip address from eth0
+ */
 string ipAddr()
 {
 	int fd;
@@ -129,6 +132,9 @@ string ipAddr()
 	return inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
 }
 
+/* DEMO
+ * Lets you imput custom text.
+ */
 int zero(LCD *lcd)
 {
 	int i = 0;
@@ -143,13 +149,13 @@ int zero(LCD *lcd)
 		switch(str[0])
 		{
 			case '0':
-				lcd->message(outputStr(str, true), 0);
+				lcd->message(str.substr(2, str.length() - 2), 0);
 				break;
 			case '1':
-				lcd->message(outputStr(str, true), 1);
+				lcd->message(str.substr(2, str.length() - 2), 1);
 				break;
 			default:
-				lcd->message(outputStr(str, false), i);
+				lcd->message(str, i);
 				i++;
 				if(i > 1)
 				{
@@ -161,6 +167,9 @@ int zero(LCD *lcd)
 	return 0;
 }
 
+/* DEMO
+ * Scrolls through a list of defined strings
+ */
 int one(LCD *lcd)
 {
     struct termios oldSettings, newSettings;
@@ -224,6 +233,9 @@ int one(LCD *lcd)
 	return 0;
 }
 
+/* DEMO
+ * Scrolls left to right on two lines of text
+ */
 int two(LCD *lcd)
 {
     struct termios oldSettings, newSettings;
@@ -348,6 +360,9 @@ int two(LCD *lcd)
 	return 0;
 }
 
+/* DEMO
+ * Scrolls left to right on two lines of text, scrolls up through a list of strings
+ */
 int three(LCD *lcd)
 {
     struct termios oldSettings, newSettings;
@@ -498,6 +513,9 @@ int three(LCD *lcd)
 	return 0;
 }
 
+/* DEMO
+ * Displays current time and your local ip
+ */
 int four(LCD *lcd)
 {
     struct termios oldSettings, newSettings;
