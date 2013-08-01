@@ -20,7 +20,7 @@ string outputStr(string input, bool cutLineNumber)
 {
 	if(cutLineNumber)
 	{
-		return input.substr(2, input.length() - 3);
+		return input.substr(2, input.length() - 2);
 	}
 	return input;
 }
