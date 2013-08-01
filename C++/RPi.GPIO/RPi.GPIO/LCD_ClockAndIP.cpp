@@ -21,13 +21,6 @@
 
 using namespace std;
 
-string ts(int i)
-{
-	std::stringstream ss;
-	ss << i;
-	return ss.str();
-}
-
 string mon(unsigned int i)
 {
 	while(i > 12)
@@ -73,7 +66,7 @@ string mon(unsigned int i)
 			return "Dec";
 			break;
 		default:
-			return ts(i);
+			return Utils::to_string(i);
 	}
 }
 
@@ -90,12 +83,12 @@ string dateTime()
 	time_t c;
 	time(&c);
 	struct tm *theTime = localtime(&c);
-	string day = ts(theTime->tm_mday);
+	string day = Utils::to_string(theTime->tm_mday);
 	int month = theTime->tm_mon + 1;
 
-	string hr = ts(theTime->tm_hour);
-	string min = ts(theTime->tm_min);
-	string second = ts(theTime->tm_sec);
+	string hr = Utils::to_string(theTime->tm_hour);
+	string min = Utils::to_string(theTime->tm_min);
+	string second = Utils::to_string(theTime->tm_sec);
 	check(day);
 	check(hr);
 	check(min);
@@ -129,10 +122,10 @@ int main(void)
 {
     struct termios oldSettings, newSettings;
 
-    tcgetattr( fileno( stdin ), &oldSettings );
+    tcgetattr(fileno(stdin), &oldSettings);
     newSettings = oldSettings;
     newSettings.c_lflag &= (~ICANON & ~ECHO);
-    tcsetattr( fileno( stdin ), TCSANOW, &newSettings );
+    tcsetattr(fileno(stdin), TCSANOW, &newSettings);
 	
     struct timeval tv;
 
@@ -163,13 +156,13 @@ int main(void)
 
 		fd_set set;
 
-        FD_ZERO( &set );
-        FD_SET( fileno( stdin ), &set );
+        FD_ZERO(&set);
+        FD_SET(fileno(stdin), &set);
 
-		int res = select( fileno( stdin )+1, &set, NULL, NULL, &tv );
+		int res = select(fileno(stdin) + 1, &set, NULL, NULL, &tv);
 		if(res > 0)
 		{
-			read( fileno( stdin ), &c, 1 );
+			read(fileno(stdin), &c, 1);
 		}
 	}
 	while(c != 'q');
@@ -177,7 +170,7 @@ int main(void)
 	lcd.clear();
 	lcd.~LCD();
 
-	tcsetattr( fileno( stdin ), TCSANOW, &oldSettings );
+	tcsetattr(fileno(stdin), TCSANOW, &oldSettings);
 
     return 0;
 }

@@ -29,7 +29,7 @@ int GPIO::output(unsigned int ioPort, bool e)
 
 int GPIO::setup(unsigned int ioPort, string dir)
 {
-	for(int i = 0; i < openIOPorts.size(); i++)
+	for(unsigned int i = 0; i < openIOPorts.size(); i++)
 	{
 		if(ioPort == openIOPorts[i])
 		{
@@ -64,7 +64,7 @@ int GPIO::setup(unsigned int ioPort, string dir)
 int GPIO::cleanup()
 {
 	bool b = false;
-	for(int i = 0; i < openIOPorts.size(); i++)
+	for(unsigned int i = 0; i < openIOPorts.size(); i++)
 	{
 		string unexport_str = "/sys/class/gpio/unexport";
 		ofstream unexportgpio(unexport_str.c_str());
