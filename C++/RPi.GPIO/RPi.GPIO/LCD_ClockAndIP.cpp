@@ -167,7 +167,6 @@ int main(void)
 	}
 	while(c != 'q');
 
-	lcd.clear();
 	lcd.~LCD();
 
 	tcsetattr(fileno(stdin), TCSANOW, &oldSettings);
