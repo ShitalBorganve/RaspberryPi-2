@@ -3,7 +3,7 @@
 
 /*
  * DEMO
- * Blinks a LED 10 times
+ * Blinks a LED 5 times
  */
 int zero()
 {
@@ -23,7 +23,7 @@ int main(int argc, const char* argv[])
 
 	switch(k)
 	{
-		/*Blinks a LED 10 times*/
+		/*Blinks a LED 5 times*/
 		case '0':
 			zero();
 			break;
