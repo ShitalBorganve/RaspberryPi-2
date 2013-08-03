@@ -1,6 +1,7 @@
 #include <iostream>
 #include "LCD.h"
 #include "Utils.h"
+#include "GPIO.h"
 #include <string>
 #include <vector>
 #include <stdio.h>
@@ -602,6 +603,7 @@ int main(int argc, const char* argv[])
 	}
 
 	lcd.~LCD();
+	GPIO::cleanup();
 
     return 0;
 }
