@@ -146,24 +146,30 @@ int zero(LCD *lcd)
 		{
 			lcd->clear();
 		}
-		switch(str[0])
+		else
 		{
-			case '0':
-				lcd->message(str.substr(2, str.length() - 2), 0);
-				break;
-			case '1':
-				lcd->message(str.substr(2, str.length() - 2), 1);
-				break;
-			default:
-				lcd->message(str, i);
-				i++;
-				if(i > 1)
-				{
-					i = 0;
-				}
+			switch(str[0])
+			{
+				/*Sends message to top line*/
+				case '0':
+					lcd->message(str.substr(2, str.length() - 2), 0);
+					break;
+				/*Sends message to bottom line*/
+				case '1':
+					lcd->message(str.substr(2, str.length() - 2), 1);
+					break;
+				/*Sends message i line (0 = top, 1 = bottom)*/
+				default:
+					lcd->message(str, i);
+					i++;
+					if(i > 1)
+					{
+						i = 0;
+					}
+			}
 		}
 	}
-	while(str != "exit");
+	while(str != "exit"); /*If input string equals exit then it quits the application*/
 	return 0;
 }
 
