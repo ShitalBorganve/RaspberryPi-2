@@ -13,7 +13,10 @@ int zero()
 	{
 		GPIO::output(11, val);
 		val = !val;
-		usleep(1000000);
+		if(i < 9)
+		{
+			usleep(1000000);
+		}
 	}
 }
 
