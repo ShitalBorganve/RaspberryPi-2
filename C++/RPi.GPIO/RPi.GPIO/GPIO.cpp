@@ -61,11 +61,31 @@ int GPIO::setup(unsigned int ioPort, string dir)
 	return 0;
 }
 
+string getDirection(unsigned int ioPort)
+{
+	string dir = "out";
+	string setdir_str ="/sys/class/gpio/gpio" + Utils::to_string(ioPort) + "/direction";
+    ifstream setdirgpio(setdir_str.c_str());
+    if (setdirgpio < 0)
+	{
+        cout << WARNING << "OPERATION FAILED: Unable to set direction of GPIO" << ioPort << "." << ENDC << endl;
+        return dir;
+    }
+ 
+    setdirgpio >> dir;
+    setdirgpio.close();
+	return dir;
+}
+
 int GPIO::cleanup()
 {
 	bool b = false;
 	for(unsigned int i = 0; i < openIOPorts.size(); i++)
 	{
+		if(getDirection(openIOPorts[i]) == "out")
+		{
+			output(openIOPorts[i], false);
+		}
 		string unexport_str = "/sys/class/gpio/unexport";
 		ofstream unexportgpio(unexport_str.c_str());
 		if (unexportgpio < 0)
