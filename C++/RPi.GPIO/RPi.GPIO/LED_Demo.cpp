@@ -15,7 +15,7 @@ int zero()
 		val = !val;
 		if(i < 9)
 		{
-			usleep(1000000);
+			usleep(500000);
 		}
 	}
 }
