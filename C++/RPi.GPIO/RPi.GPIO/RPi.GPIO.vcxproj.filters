@@ -35,7 +35,13 @@
     <ClCompile Include="LCD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LCD_ClockAndIP.cpp">
+    <ClCompile Include="LCD_Demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LED_Demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileDemos.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

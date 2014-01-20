@@ -127,3 +127,34 @@ bool GPIO::getValue(unsigned int ioPort)
 	}
 	return false;
 }
+
+int clearIO()
+{
+	bool b = false;
+	if (openIOPorts.size() > 0)
+	{
+		for (unsigned int i = 0; i < openIOPorts.size(); i++)
+		{
+			if (getDirection(openIOPorts[i]) == "out")
+			{
+				output(openIOPorts[i], false);
+			}
+			string unexport_str = "/sys/class/gpio/unexport";
+			ofstream unexportgpio(unexport_str.c_str());
+			if (unexportgpio < 0)
+			{
+				b = true;
+				cout << WARNING << "OPERATION FAILED: Unable to unexport GPIO" << openIOPorts[i] << "." << ENDC << endl;
+			}
+			else
+			{
+				unexportgpio.write(Utils::to_string(openIOPorts[i]).c_str(), Utils::to_string(openIOPorts[i]).length());
+			}
+
+			unexportgpio.close();
+		}
+		openIOPorts.clear();
+	}
+	if (b) return -1;
+	return 0;
+}

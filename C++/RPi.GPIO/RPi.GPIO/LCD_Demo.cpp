@@ -603,7 +603,6 @@ int main(int argc, const char* argv[])
 	}
 
 	lcd.~LCD();
-	GPIO::cleanup();
-
-    return 0;
+	
+    return GPIO::cleanup();
 }

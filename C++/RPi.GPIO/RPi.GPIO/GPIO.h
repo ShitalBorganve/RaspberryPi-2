@@ -28,6 +28,11 @@ class GPIO
 		 * Doesn't completely work
 		 */
 		static int cleanup();
+
+		/*
+		 * Clears all of the IO out pins to output 0
+		*/
+		static int clearIO();
 };
 
 #endif

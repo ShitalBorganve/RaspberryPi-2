@@ -98,7 +98,6 @@ int main(int argc, const char* argv[])
 		default:
 			zero();
 	}
-	GPIO::cleanup();
-
-	return 0;
+	
+	return GPIO::cleanup();
 }
