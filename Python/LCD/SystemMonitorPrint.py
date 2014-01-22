@@ -9,7 +9,7 @@ WARNING = '\033[93m'
 FAIL = '\033[31m'
 ENDC = '\033[0m'
 BOLD = "\033[1m"
-CYAN = '\33[36m'
+CYAN = '\033[36m'
 
 os.system('clear')
 
