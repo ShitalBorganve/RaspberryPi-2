@@ -16,7 +16,7 @@ function ask {
     fi
 }
 
-echo -e "This script automatically downloads and installs the required items for a RaspberryPi webserver: \033[36mApache2, php5, mySQL, phpMyAdmin, vsftpd (FTP Server), and Hexxeh's RPI update tool. It also sets up the SSH Server. Would you like to continue? [Y/n]\033[0m"
+printf "This script automatically downloads and installs the required items for a RaspberryPi webserver: \033[36mApache2, php5, mySQL, phpMyAdmin, vsftpd (FTP Server), and Hexxeh's RPI update tool. It also sets up the SSH Server. Would you like to continue? [Y/n]\033[0m"
 
 ask
 
@@ -51,14 +51,6 @@ sudo apt-get install ca-certificates
 sudo apt-get install git-core
 sudo wget http://goo.gl/1BOfJ -O /usr/bin/rpi-update && sudo chmod +x /usr/bin/rpi-update
 sudo rpi-update
-
-#enables the SSH server
-echo ""
-echo ""
-echo "Starting SSH server"
-echo ""
-echo ""
-sudo mv /boot/boot_enable_ssh.rc /boot/boot.rc
 
 #installs apache2 and php5
 echo ""
@@ -97,6 +89,11 @@ sudo chmod 0755 -R /var/www
 sudo chmod g+s -R /var/www
 
 #installs phpMyAdmin
+echo ""
+echo ""
+echo "Downloading phpmyadmin"
+echo ""
+echo ""
 sudo apt-get install phpmyadmin
 sudo echo -e "\nInclude /etc/phpmyadmin/apache.conf" >> "/etc/apache2/apache2.conf"
 sudo service apache2 restart
@@ -104,7 +101,7 @@ sudo service apache2 restart
 #writes index.html file
 sudo echo -e "<html>\n<head>\n<title>It works!</title>\n</head>\n<body>\n<h1>It works!</h1>\n<h2>Your first webpage on your RaspberryPi.</h2>\n<h3>Thank you for using the RPi-WebServer tool created by Jesse Laning.</h3>\n</body>\n</html>" > "/var/www/index.html"
 
-echo -e "\033[93mTo finish installing a restart of the RaspberryPi is required\nRestart now? [Y/n]"
+printf "\033[93mTo finish installing a restart of the RaspberryPi is required\nRestart now? [Y/n]"
 
 ask
 
